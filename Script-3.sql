@@ -1,0 +1,109 @@
+SELECT 1+1 
+FROM DUAL --1행1열
+WHERE 'SQL'='SQL    '; 
+--WHERE 1=0; -- 결과가 TRUE FALSE(결과가 안나옴)
+
+CREATE TABLE EX_TYPE (--칼럼에 대한 데이터 타입,길이 결정
+	C CHAR(7) --CHAR : 나머지 공백처리(주로 길이가 일정한 경우)
+	,V VARCHAR(7) --VARCHAR : 나머지 NULL처리(가변.저장공간효율,실무에서 주로 사용)
+	,N NUMBER(5,2)
+	); --숫자는 괄호 안을 명시하지않아도 됨
+
+DROP TABLE EX_TYPE;
+
+SELECT *
+FROM EX_TYPE
+ORDER BY C ASC;
+
+INSERT INTO EX_TYPE VALUES('1','SQL',1); -- 순서대로 칼럼추가
+INSERT INTO EX_TYPE VALUES('100','SQL',100);
+INSERT INTO EX_TYPE VALUES('2','SQL',2); 
+INSERT INTO EX_TYPE VALUES('3','SQL',3); 
+INSERT INTO EX_TYPE VALUES('20','SQL',20);
+
+
+DELETE FROM EX_TYPE; --진짜데이터가 삭제되는거라 조심
+
+SELECT *
+FROM EX_TYPE
+WHERE C=V || '    '; --C는 사실상 공백을 포함하고있어서. 문자상수는 trim처리됨
+
+SELECT 3.14 + 1 FROM DUAL;
+
+SELECT ROWNUM, STUDENT.*, ROWID 
+FROM STUDENT
+WHERE ROWNUM <= 5; --ROWNUM은 추출된 각 행에 부여된 일련번호
+--WHERE GRADE = 2;
+
+SELECT STUDENT.*,ROWID FROM STUDENT; --의사칼럼(행별 고유주소) 
+
+SELECT SYSDATE FROM DUAL; --현재시간 정보 조회
+
+SELECT  * FROM DEPARTMENT d ;
+
+SELECT * FROM EX_TYPE;
+
+--학생 테이블에서 1학년 학생의 학번 이름 학과번호 조회
+SELECT STUDNO, NAME, DEPTNO, GRADE 
+FROM STUDENT s
+WHERE GRADE = '1'; --1로 해도 형변환
+
+--학번 이름 학년 학과번호 몸무게 조회, 학생테이블에서 70kg이상
+SELECT STUDNO ,GRADE ,DEPTNO ,WEIGHT
+FROM STUDENT s 
+WHERE WEIGHT >= 70;
+
+--이름 학년 몸무게 학과번호 조회, 70kg 이상이면서 1학년 학생
+SELECT NAME, GRADE, WEIGHT, DEPTNO 
+FROM STUDENT s 
+WHERE WEIGHT >= 70 
+	AND GRADE = '1';
+
+
+SELECT *
+FROM STUDENT
+WHERE HEIGHT >= 170 AND WEIGHT >= 70;
+
+--학생테이블에서 학번과 이름을 연결하여 STUDENT라는 별칭을 붙인 결과 조회
+SELECT STUDNO ||' '||NAME STUDENT, CONCAT(CONCAT(STUDNO,' '), NAME) STUDENT
+FROM STUDENT;
+
+--학번 이름 몸무게 출력 / 체중이 50이상 70 이하인 1학년 학생
+SELECT STUDNO ,NAME ,WEIGHT 
+FROM STUDENT s
+WHERE WEIGHT BETWEEN 50 AND 70 AND GRADE = 1; 
+
+--이름 생년월일 출력 /81년에서 83년도에 태어난 학생
+SELECT NAME ,BIRTHDATE 
+FROM STUDENT s 
+WHERE BIRTHDATE BETWEEN '81/01/01' AND '83/12/31';
+
+--81년에서 83년도에 태어난 학생(타입 변경 후 IN 사용)
+SELECT TO_CHAR(BIRTHDATE,'YY') YY, s.*
+FROM STUDENT s 
+WHERE TO_CHAR(BIRTHDATE,'YY') IN(81,82,83); 
+
+--이름 학년 학과번호 조회 / 102번,201번 학과만
+SELECT NAME ,GRADE ,DEPTNO 
+FROM STUDENT s 
+WHERE DEPTNO IN(102, 201);
+
+--이름 학년 학과번호 조회/ 김씨만
+SELECT *
+FROM STUDENT s 
+--WHERE NAME LIKE '김$';
+--WHERE NAME LIKE '$영$';
+WHERE NAME LIKE '__영';
+
+--이름,직급,보직수당 조회 / 수당이 있는 교수
+SELECT NAME, POSITION , COMM
+FROM PROFESSOR p 
+WHERE COMM IS NOT NULL;
+
+
+--이름,급여,수당,급여+수당 조회/
+--NVL(NULL가능성있는 컬럼,대체값)
+--NVL2(NULL가능성있는 컬럼,NULL 아닌 경우 대체값,NULL의 경우 대체값)
+SELECT NAME, SAL, COMM ,SAL +COMM SALCOM, NVL(COMM, 0)+SAL ,NVL2(COMM,SAL+COMM,SAL)
+FROM PROFESSOR p ;
+

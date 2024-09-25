@@ -1,0 +1,60 @@
+SELECT * 
+FROM TAB;
+
+
+SELECT * 
+FROM DEPARTMENT d  ;
+
+--부서 테이블의 모든 정보 조회
+SELECT * 
+FROM DEPARTMENT d ;
+
+--부서 테이블의 특정 컬럼 조회(중복가능)
+SELECT DEPTNO, DEPTNO, DNAME, COLLEGE , LOC
+FROM DEPARTMENT d ;
+
+
+SELECT * FROM STUDENT s ;
+
+--201번이 아닌 학과별 학생수, 학생평균키 구하기
+SELECT 
+	DEPTNO, 
+	COUNT(*) CNT, 
+	AVG(HEIGHT) AVG
+FROM 
+	STUDENT
+WHERE 
+	DEPTNO != 201
+GROUP BY DEPTNO
+--그중 COUNT가 5 이상인....
+HAVING COUNT(*) >= 5;
+
+--학생 역순정렬 후 학번 오름차순
+SELECT * 
+FROM 
+	STUDENT
+ORDER BY 
+	GRADE DESC, 
+	STUDNO;
+
+--학생 테이블의 학과번호 출력 (중복제거)
+SELECT DISTINCT DEPTNO -- SELECT ALL DEPTNO가 기본값. TUPLE(RESULT SET 행. 행집합) 기준으로 DISTINCT
+--SELECT DISTINCT DEPTNO, STUDNO 은 중복제거가 안됨?1
+FROM STUDENT;
+
+--학생 테이블의 학과번호, 학년 (중복제거)
+SELECT DISTINCT DEPTNO, GRADE
+FROM STUDENT;
+
+--부서테이블에서 부서이름은 "부서이름", 부서번호는 "부서 번호"라는 별명을 붙여서 조회
+SELECT DNAME 부서이름, DEPTNO AS "부서 번호"
+FROM DEPARTMENT ;
+
+
+SELECT *
+FROM STUDENT
+WHERE HEIGHT >= 170 AND WEIGHT >= 70;
+
+--학생테이블에서 학번과 이름을 연결하여 STUDENT라는 별칭을 붙인 결과 조회
+SELECT STUDNO ||' '||NAME STUDENT, CONCAT(CONCAT(STUDNO,' '), NAME) STUDENT
+FROM STUDENT;
