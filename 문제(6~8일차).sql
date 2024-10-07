@@ -1,12 +1,52 @@
 --6일차---------------------------------------------------------------------------------------------------
---학생 16
---학과 7개
---카티션 프로덕트 (두 테이블 행의 곱)
+--학번, 이름, 학과번호, 학과이름을 출력하여라
+SELECT STUDNO, S.DEPTNO ,DNAME
+FROM STUDENT S, DEPARTMENT D
+WHERE S.DEPTNO = D.DEPTNO ;
+
+--INNER JOIN 사용
+SELECT STUDNO, S.DEPTNO, DNAME
+FROM STUDENT S
+INNER JOIN DEPARTMENT D ON S.DEPTNO = D.DEPTNO;
+
+--학생테이블과 부서 테이블을 카티션 곱 하여라
+--학생이름,학과번호,학과이름,학과위치 출력
+SELECT STUDNO, S.DEPTNO ,DNAME, LOC
+FROM STUDENT S, DEPARTMENT D;
+--CROSS JOIN 사용
+SELECT STUDNO, S.DEPTNO ,DNAME, LOC
+FROM STUDENT S CROSS JOIN DEPARTMENT D ;
+
 --전인하 학생의 학번,이름,학과이름,학과위치를 조회
+SELECT STUDNO, NAME, DNAME, LOC
+FROM STUDENT s ,DEPARTMENT d 
+WHERE S.DEPTNO = D.DEPTNO 
+	AND NAME = '전인하';
+
 --몸무게가 80KG 이상인 학생의 학번,이름,체중,학과이름,학과위치 조회
+SELECT STUDNO, NAME, WEIGHT, DNAME, LOC
+FROM STUDENT s ,DEPARTMENT d 
+WHERE S.DEPTNO = D.DEPTNO 
+	AND S.WEIGHT >= 80;
+
 --1호관 소속 학생의 학번,이름,학과이름 조회
+SELECT STUDNO, NAME, DNAME, LOC
+FROM STUDENT s , DEPARTMENT d 
+WHERE S.DEPTNO = D. DEPTNO 
+	AND D.LOC = '1호관';
+
 --ANSI 99(SQL 표준이다)
+--EQUI JOIN을 사용하여 학번, 이름, 학과번호, 소속학과 이름, 학과위치 출력
+SELECT STUDNO, NAME, S.DEPTNO , DNAME, LOC
+FROM STUDENT s ,DEPARTMENT d 
+WHERE S.DEPTNO = D.DEPTNO ;
+
 --자연 조인을 사용하여 학번,이름,학과번호,학과이름 조회
+SELECT STUDNO, NAME, DEPTNO ,DNAME 
+FROM STUDENT
+NATURAL JOIN DEPARTMENT;
+
+
 --JOIN ~ USING, JOIN ~ ON
 --NATURAL JOIN을 사용 교수번호 교수 이름,학과 번호 학과 이름 조회
 --교수별 급여 등급을 조회,대상테이블 :professor,salgrard NON EQUT 조인
