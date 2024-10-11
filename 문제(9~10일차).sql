@@ -36,9 +36,17 @@
 --SUBNAME 이름
 --TERM 학기(1,2)
 --TYPE 필수 여부 CHAR(1)
+ALTER TABLE STUDENT ADD CONSTRAINT STUDENT_PK PRIMARY KEY(STUDNO); 
 --테이블?
 --533page
 --제약조건거는거 시험문제 나옴.. 수강테이블인스턴스가 주어지는........
+----SUGANG 테이블 생성
+--STUDNO는 STUDENT의 STUDNO을 외래키로
+--SUBNO은 숫자 타입
+--REGDATE는 데이터타입
+--RESULT는 3자리 숫자 타입
+--SUBNO은 SUBJECT의 SUBNO을 외래키로
+--SUGANG의 PK는 (STUDNO,SUBNO)
 --열조합PK는 열레벨로 선언하는게 아니라 테이블,,?
 --부모 : unique, ~ .
 --제약을 생성시 거는게 아니라 나중에 거는 것? 

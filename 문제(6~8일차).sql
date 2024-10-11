@@ -85,7 +85,8 @@ JOIN PROFESSOR p USING(DEPTNO);
 
 --학번,이름,교수번호,담당교수이름 조회하는데 담당교수가 없는 학생도 출력
 SELECT 
-
+FROM STUDENT s 
+LEFT JOIN PROFESSOR p ;
 
 
 -- (+)
